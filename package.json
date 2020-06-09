@@ -1,0 +1,28 @@
+{
+  "name": "jamstockex-api",
+  "version": "1.0.0",
+  "description": "This project uses NodeJS, ExpressJS and Serverless framework to serve the scraped data from  [Jamaica Stock Exchange](https://www.jamstockex.com/)  website that is stored in a MongoDB Cloud instance.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/sdclarkelab/jamstock/jamstockex-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/sdclarkelab/jamstock/jamstockex-api/issues"
+  },
+  "homepage": "https://gitlab.com/sdclarkelab/jamstock/jamstockex-api#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "lodash": "^4.17.15",
+    "mongoose": "^5.8.1"
+  },
+  "devDependencies": {}
+}
