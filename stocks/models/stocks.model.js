@@ -110,7 +110,7 @@ exports.list = (symbols, perPage, page, projection) => {
 
 exports.findBySymbol = (symbol, projection) => {
 
-  const symbolFilter = {symbol: symbol};
+  const symbolFilter = {symbol: symbol, currency: 'JMD'};
 
   return new Promise((resolve, reject) => {
     Stock.findOne(symbolFilter)
