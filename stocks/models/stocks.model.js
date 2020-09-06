@@ -1,126 +1,125 @@
-const mongoose = require('../../common/services/mongoDb.service').mongoose;
-const Schema = mongoose.Schema;
+const { mongoose } = require('../../common/services/mongoDb.service');
+
+const { Schema } = mongoose;
 
 // Set Mongoose Schema
-let stockSchema = new Schema(
+const stockSchema = new Schema(
   {
-    last_updated_date: {  
+    last_updated_date: {
       type: Schema.Types.Mixed,
-      required: true
+      required: true,
     },
     instrument_name: {
       type: String,
-      required: true
+      required: true,
     },
     symbol: {
       type: String,
-      required: true
+      required: true,
     },
     currency: {
       type: String,
-      required: true
+      required: true,
     },
     sector: {
       type: String,
-      required: true
+      required: true,
     },
     type: {
       type: String,
-      required: true
+      required: true,
     },
     website: {
       type: String,
-      required: true
+      required: true,
     },
     is_listed: {
       type: Boolean,
-      required: true
+      required: true,
     },
     market: {
       type: String,
-      required: true
+      required: true,
     },
     corporate_action_url: {
-      type: String
+      type: String,
     },
     dividends: [
       {
         amount: {
-          type: Number
+          type: Number,
         },
         payment_date: {
-          type: Date
+          type: Date,
         },
         execution_date: {
-          type: Date
+          type: Date,
         },
         record_date: {
-          type: Date
-        }
-      }
+          type: Date,
+        },
+      },
     ],
     trade_info: {
       volume_traded: {
-        type: Number
+        type: Number,
       },
       dollar_change: {
-        type: Number
+        type: Number,
       },
       market_price: {
-        type: Number
+        type: Number,
       },
       percentage_change: {
-        type: Number
-      }
-    }
+        type: Number,
+      },
+    },
   },
-  { collection: "stock" }
+  { collection: 'stock' },
 );
 
-stockSchema.virtual('id').get(function () {
+stockSchema.virtual('id').get(function convertHexToString() {
   return this._id.toHexString();
 });
 
 // Ensure virtual fields are serialised.
 stockSchema.set('toJSON', {
-  virtuals: true
+  virtuals: true,
 });
-  
+
 // Export stock model
-const Stock = mongoose.model("stock", stockSchema);
+const Stock = mongoose.model('stock', stockSchema);
 
 exports.list = (symbols, perPage, page, projection) => {
-
-  const symbolFilter = symbols != '' ? {symbol: { $in: symbols } }: {};
+  const symbolFilter = symbols !== '' ? { symbol: { $in: symbols } } : {};
 
   return new Promise((resolve, reject) => {
     Stock.find(symbolFilter)
-    .limit(perPage)
-    .skip(perPage * page)
-    .select(projection)
-    .exec(function (err, stocks) {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(stocks);
-      }
-    })
+      .limit(perPage)
+      .skip(perPage * page)
+      .select(projection)
+      .exec((err, stocks) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(stocks);
+        }
+      });
   });
-}
+};
 
 exports.findBySymbol = (symbol, projection) => {
-
-  const symbolFilter = {symbol: symbol, currency: 'JMD'};
+  const symbolFilter = { symbol, currency: 'JMD' };
 
   return new Promise((resolve, reject) => {
     Stock.findOne(symbolFilter)
-    .select(projection)
-    .exec(function (err, stocks) {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(stocks);
-      }
-    })
+      .select(projection)
+      .exec((err, stocks) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(stocks);
+        }
+      });
   });
-}
+};

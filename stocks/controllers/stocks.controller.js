@@ -1,28 +1,42 @@
-const StockModel = require('../models/stocks.model');
 const _ = require('lodash');
+const moment = require('moment');
+const StockModel = require('../models/stocks.model');
 
 exports.list = (req, res) => {
   console.log(`${req.url}`);
 
-  let limit = _.get(req.query, 'limit', 0) <= 100 ? parseInt(req.query.limit) : 10;
-  let projection = _.get(req.query, 'projection', '');
-  let pageNumber = parseInt(_.get(req.query, 'page', 0));
-  let symbols = _.get(req.query, 'symbols', '').replace(/\s/g,'').split(',');
+  const limit = _.get(req.query, 'limit', 0) <= 100 ? parseInt(req.query.limit, 10) : 10;
+  const projection = _.get(req.query, 'projection', '');
+  const pageNumber = parseInt(_.get(req.query, 'page', 0), 10);
+  const symbols = _.get(req.query, 'symbols', '').replace(/\s/g, '').split(',');
 
   StockModel.list(symbols, limit, pageNumber, projection)
-  .then((result) => {
-      res.status(200).send(result);
-  });
+    .then((result) => {
+      let lastUpdatedDate = result[0].last_updated_date;
+
+      result.forEach((element) => {
+        if (moment(element.last_updated_date).diff(moment(lastUpdatedDate)) > 0) {
+          lastUpdatedDate = element.last_updated_date;
+        }
+      });
+
+      const finalResponse = {
+        result,
+        lastUpdatedDate,
+      };
+
+      res.status(200).send(finalResponse);
+    });
 };
 
 exports.getBySymbol = (req, res) => {
   console.log(`${req.url}`);
 
-  let projection = _.get(req.query, 'projection', '');
-  let symbol = _.get(req.params, 'symbol', '');
+  const projection = _.get(req.query, 'projection', '');
+  const symbol = _.get(req.params, 'symbol', '');
 
   StockModel.findBySymbol(symbol, projection)
-  .then((result) => {
+    .then((result) => {
       res.status(200).send(result || {});
-  });
+    });
 };
