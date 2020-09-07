@@ -91,7 +91,7 @@ stockSchema.set('toJSON', {
 const Stock = mongoose.model('stock', stockSchema);
 
 exports.list = (symbols, perPage, page, projection) => {
-  const symbolFilter = symbols !== '' ? { symbol: { $in: symbols } } : {};
+  const symbolFilter = symbols ? {} : { symbol: { $in: symbols } };
 
   return new Promise((resolve, reject) => {
     Stock.find(symbolFilter)
