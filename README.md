@@ -1,5 +1,5 @@
 # Jamstockex-api
-  This project uses NodeJS, ExpressJS and Serverless framework to serve the scraped data from  [Jamaica Stock Exchange](https://www.jamstockex.com/)  website that is stored in a MongoDB Cloud instance.
+  This project uses NodeJS and ExpressJS framework to serve [Jamaica Stock Exchange](https://www.jamstockex.com/) scraped data that is stored in MongoDB.
 
 
 ## Requirements  
@@ -48,7 +48,7 @@ Validate that the application is live
 ```shell script
 heroku ps:scale web=1
 ```
-#### Test locally
+#### Test locally with heroku
 ```shell script
-nodemon index.js
+heroku local web
 ```
