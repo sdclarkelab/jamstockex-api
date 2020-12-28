@@ -13,9 +13,6 @@ module.exports = {
   plugins: [
     'prettier',
   ],
-  parserOptions: {
-    parser: 'babel-eslint',
-  },
   rules: {
     'no-unused-vars': 'warn',
   },
