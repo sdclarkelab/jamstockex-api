@@ -2,7 +2,7 @@
 The **StockWatchJa: JamStockEx API** serves up stock details info as JSON at this [URL](http://jamstockexapi.stockwatchja.com/stocks). The data is pulled from **[StockWatchJa: JamStockEx Scraper](https://github.com/sdclarkelab/jamstockex-scraper)**.
 
 #### Response Preview
-```json
+```javascript
 {
   result: [
   {
