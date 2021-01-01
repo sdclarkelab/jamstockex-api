@@ -32,6 +32,9 @@ The **StockWatchJa: JamStockEx API** serves up stock details info as JSON at thi
 }
 ```
 
+## API Documentation
+Click **[here](https://documenter.getpostman.com/view/6678518/TVt2biUM)** to view the API documentation.
+
 ## Requirements  
 Tool | Version  | Source |  
 --- | --- | --- |  
