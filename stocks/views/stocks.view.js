@@ -1,5 +1,4 @@
-const _ = require('lodash');
-const moment = require('moment');
+const StockController = require('../controllers/stocks.controller');
 const StockModel = require('../models/stocks.model');
 
 exports.getStocks = (req, res) => {
@@ -24,15 +23,5 @@ exports.getStocks = (req, res) => {
       };
 
       res.status(200).send(finalResponse);
-    });
-};
-
-exports.getBySymbol = (req, res) => {
-  const projection = _.get(req.query, 'projection', '');
-  const symbol = _.get(req.params, 'symbol', '');
-
-  StockModel.findBySymbol(symbol, projection)
-    .then((result) => {
-      res.status(200).send(result || {});
     });
 };
