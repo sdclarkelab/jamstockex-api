@@ -5,7 +5,7 @@ const app = express();
 const headers = require('./lib/routes/middleware/headers');
 const errorHandler = require('./lib/routes/middleware/errorHandler');
 const auth = require('./lib/routes/middleware/auth');
-const stocks = require('./lib/routes/stocks');
+const stocks = require('./lib/routes/stocksRouter');
 
 require('dotenv').config();
 
