@@ -2,10 +2,10 @@ const express = require('express');
 
 const app = express();
 
-const headers = require('./lib/routes/middleware/headers');
-const errorHandler = require('./lib/routes/middleware/errorHandler');
-const auth = require('./lib/routes/middleware/auth');
-const stocks = require('./lib/routes/stocksRouter');
+const headers = require('./src/routes/middleware/headers');
+const errorHandler = require('./src/routes/middleware/errorHandler');
+const auth = require('./src/routes/middleware/auth');
+const stocks = require('./src/routes/stocks');
 
 require('dotenv').config();
 
