@@ -1,8 +1,8 @@
-const { mongoose } = require('../../common/services/mongoDb.service');
+const mongoose = require('mongoose');
+const mongooseLeanVirtuals = require('mongoose-lean-virtuals');
 
 const { Schema } = mongoose;
 
-// Set Mongoose Schema
 const stockSchema = new Schema(
   {
     last_updated_date: {
@@ -78,48 +78,12 @@ const stockSchema = new Schema(
   { collection: 'stock' },
 );
 
-stockSchema.virtual('id').get(function convertHexToString() {
-  return this._id.toHexString();
+// Create virtual property called "id" to store MongoDB id as a string
+stockSchema.virtual('id').get(function () {
+  return this._id.toString();
 });
 
-// Ensure virtual fields are serialised.
-stockSchema.set('toJSON', {
-  virtuals: true,
-});
+// The virtual properties will show up in a lean query
+stockSchema.plugin(mongooseLeanVirtuals);
 
-// Export stock model
-const Stock = mongoose.model('stock', stockSchema);
-
-exports.list = (symbols, perPage, page, projection) => {
-  const symbolFilter = symbols ? {} : { symbol: { $in: symbols } };
-
-  return new Promise((resolve, reject) => {
-    Stock.find(symbolFilter)
-      .limit(perPage)
-      .skip(perPage * page)
-      .select(projection)
-      .exec((err, stocks) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(stocks);
-        }
-      });
-  });
-};
-
-exports.findBySymbol = (symbol, projection) => {
-  const symbolFilter = { symbol, currency: 'JMD' };
-
-  return new Promise((resolve, reject) => {
-    Stock.findOne(symbolFilter)
-      .select(projection)
-      .exec((err, stocks) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(stocks);
-        }
-      });
-  });
-};
+module.exports = stockSchema;
