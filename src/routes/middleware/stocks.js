@@ -1,1 +1,0 @@
-return result.then((res) => stockViewModel.createStockViewModel(res));

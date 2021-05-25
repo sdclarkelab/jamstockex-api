@@ -1,4 +1,3 @@
-const _ = require('lodash');
 const mongodbConfig = require('../configs/mongodbConfig');
 const mongodbStockService = require('../services/mongodbStockService');
 const mongoDbStockView = require('../views/mongoDbStockView');
@@ -17,8 +16,7 @@ exports.getStocks = async (req, res, next) => {
       .lean({ virtuals: true })
       .exec();
 
-    req.stocks = stocks;
-    return next();
+    return res.status(200).json(mongoDbStockView.createStockViewModel(stocks));
   } catch (error) {
     return next(error);
   }
@@ -32,13 +30,8 @@ exports.getStock = async (req, res, next) => {
       .select(options.fields)
       .lean({ virtuals: true });
 
-    req.stocks = stock;
-    return next();
+    return res.status(200).json(mongoDbStockView.createStockViewModel(stock));
   } catch (error) {
     return next(error);
   }
-};
-
-exports.applyStockViewModel = (req, res) => {
-  res.json(mongoDbStockView.createStockViewModel(req.stocks));
 };

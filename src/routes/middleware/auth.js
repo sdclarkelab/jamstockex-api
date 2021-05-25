@@ -3,10 +3,10 @@ const express = require('express');
 const router = express.Router();
 
 router.use((req, res, next) => {
-  if (req.get('Content-Type') !== 'application/json') {
-    return res.send(400);
+  if (req.get('Accept') !== 'application/json') {
+    return res.sendStatus(400);
   }
-  next();
+  return next();
 });
 
 module.exports = router;
