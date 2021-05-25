@@ -7,15 +7,13 @@ const errorHandler = require('./src/routes/middleware/errorHandler');
 const auth = require('./src/routes/middleware/auth');
 const stocks = require('./src/routes/stocks');
 
-require('dotenv').config();
-
-// Error handling.
+// Error handling middleware.
 app.use('/', errorHandler);
 
-// Set response headers.
+// Set response headers middleware.
 app.use('/api', headers);
 
-// Validate the api.
+// Validate the api middleware.
 app.use('/api', auth);
 
 // Routes
