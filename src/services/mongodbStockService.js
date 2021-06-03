@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const camelcaseKeys = require('camelcase-keys');
 
 exports.createOptions = (req) => {
   const queryParams = req.query;
@@ -25,4 +26,28 @@ exports.createFindAllFilter = (req) => {
 exports.createFindOneFilter = (req) => {
   const symbol = _.get(req.params, 'symbol', '');
   return { symbol, currency: 'JMD' };
+};
+
+/**
+   * Convert object keys to camel case.
+   * @param [stock] stocks
+   * @returns [stocks]
+   */
+exports.convertKeysToCamelCase = (mongoDbStockData) => {
+  return camelcaseKeys(mongoDbStockData, { deep: true });
+};
+
+exports.createLinksHal = (req) => {
+  const links = {
+    current: {
+      href: req.headers.host + req.originalUrl,
+    },
+    prev: {
+      href: req.headers.host + req.originalUrl,
+    },
+    next: {
+      href: req.headers.host + req.originalUrl,
+    },
+  };
+  return links;
 };
