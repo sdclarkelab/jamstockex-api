@@ -12,23 +12,23 @@ exports.logMessage = (err, req, res, next) => {
   if (!isProduction) {
     console.log(err.stack);
 
-    res.status(err.status || 500);
-
-    res.json({
-      errors: {
-        message: err.message,
-        error: err,
-      },
-    });
+    return res.status(err.status || 500)
+      .json({
+        errors: {
+          message: err.message,
+          error: err,
+        },
+      });
   }
+  return next(err);
 };
 
 exports.errorHandler = (err, req, res, next) => {
-  res.status(err.status || 500);
-  res.json({
-    errors: {
-      message: err.message,
-      error: {},
-    },
-  });
+  res.status(err.status || 500)
+    .json({
+      errors: {
+        message: err.message,
+        error: {},
+      },
+    });
 };
