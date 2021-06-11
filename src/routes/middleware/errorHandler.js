@@ -1,9 +1,34 @@
-const express = require('express');
+// Catch 404
+exports.notFoundError = (req, res, next) => {
+  const err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+};
 
-const router = express.Router();
+// Log messages
+exports.logMessage = (err, req, res, next) => {
+  const isProduction = process.env.NODE_ENV === 'production';
 
-router.use((err, req, res, next) => {
-  res.send({ errorMessage: 'Not Found' });
-});
+  if (!isProduction) {
+    console.log(err.stack);
 
-module.exports = router;
+    res.status(err.status || 500);
+
+    res.json({
+      errors: {
+        message: err.message,
+        error: err,
+      },
+    });
+  }
+};
+
+exports.errorHandler = (err, req, res, next) => {
+  res.status(err.status || 500);
+  res.json({
+    errors: {
+      message: err.message,
+      error: {},
+    },
+  });
+};
