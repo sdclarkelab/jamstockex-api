@@ -4,31 +4,32 @@ The **StockWatchJa: JamStockEx API** serves up stock details info as JSON at thi
 #### Response Preview
 ```javascript
 {
-  result: [
-  {
-    trade_info: {
-      volume_traded: 9211,
-      dollar_change: 0.01,
-      market_price: 7.86,
-      percentage_change: 0.21,
-      last_updated_date: "1971-10-03T18:29:43.795Z"
+  "stocks": [
+    {
+      "id": "5f4efd8b77435e97079e95bb",
+      "lastUpdatedDate": "1995-06-22T18:31:18.362Z",
+      "instrumentName": "SOME STOCK NAME",
+      "symbol": "SYMBOL",
+      "currency": "JMD",
+      "sector": "TOURISM",
+      "type": "ORDINARY",
+      "website": null,
+      "isListed": true,
+      "market": "Main Market",
+      "corporateActionUrl": "https://www.jamstockex.com/market-data/listed-companies/corporate-actions/SYMBOL/latest",
+      "dividends": [],
+      "tradeInfo": {
+        "volumeTraded": 955,
+        "dollarChange": 0,
+        "marketPrice": 0.3,
+        "percentageChange": 0,
+        "lastUpdatedDate": "1995-06-22T18:31:18.345Z"
+      }
     },
-    _id: "f342efecedcfvedc",
-    last_updated_date: "1971-10-0T18:29:43.802Z",
-    instrument_name: "Some stock name",
-    symbol: "SSN",
-    currency: "JMD",
-    sector: "OTHER",
-    type: "ORDINARY",
-    website: null,
-    is_listed: true,
-    market: "Main Market",
-    corporate_action_url: "https://www.jamstockex.com/market-data/listed-companies corporate-actions/SSN/latest",
-    dividends: [ ],
-    id: "f342efecedcfvedc"
-  },
   .....
-  ]
+  ],
+  "results": 10,
+  "total": 245,
 }
 ```
 

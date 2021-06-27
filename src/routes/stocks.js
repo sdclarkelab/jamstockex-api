@@ -1,12 +1,10 @@
 const express = require('express');
 const stockController = require('../controllers/stockController');
+const stockMiddleware = require('./middleware/stocks');
 
 const router = express.Router();
 
-// Extract query params.
-router.use('/', stockController.extractQueryParams);
-
-router.get('/', stockController.getStocks);
-router.get('/:symbol', stockController.getStock);
+router.get('/', stockMiddleware.createParamOptions, stockController.getStocks);
+router.get('/:symbol', stockMiddleware.createParamOptions, stockController.getStock);
 
 module.exports = router;
