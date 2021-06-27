@@ -9,15 +9,25 @@ const _ = require('lodash');
 exports.createParamOptions = (req, res, next) => {
   const queryParams = req.query;
 
-  const limit = _.get(queryParams, 'limit', 0) > 0 ? parseInt(queryParams.limit, 10) : 10;
+  const limit = (() => {
+    const reqLimit = parseInt(_.get(queryParams, 'limit', 10), 10);
+    if (reqLimit > 200) {
+      return 200;
+    }
+    if (reqLimit <= 0) {
+      return 10;
+    }
+    return reqLimit;
+  })();
+
   const fields = _.get(queryParams, 'fields', '');
-  const pageNumber = parseInt(_.get(queryParams, 'offset', 0), 10);
+  const offset = parseInt(_.get(queryParams, 'offset', 0), 10);
   const search = _.get(queryParams, 'search', '');
 
   const options = {
     limit,
     fields,
-    pageNumber,
+    offset,
     search,
   };
   req.options = options;

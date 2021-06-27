@@ -11,7 +11,7 @@ exports.getStocks = async (req, res, next) => {
     const stocks = await stockModel.find(filter)
       .select(req.options.fields)
       .limit(req.options.limit)
-      .skip(req.options.limit * req.options.pageNumber)
+      .skip(req.options.limit * req.options.offset)
       .lean({ virtuals: true })
       .exec();
 
