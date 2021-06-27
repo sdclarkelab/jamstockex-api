@@ -12,19 +12,49 @@ const StockViewModel = (function () {
 
   /**
    * Create HAL links.
+   * @param {Object} req
+   * @returns
+   */
+  const createHalLinks = (req) => {
+    let pageNumber = 0;
+    let linkUrl = '';
+
+    if (req.originalUrl.includes('&offset=')) {
+      pageNumber = req.options.pageNumber;
+      linkUrl = req.headers.host + req.originalUrl;
+    } else {
+      linkUrl = `${req.headers.host}${req.originalUrl}&offset=${req.options.pageNumber}`;
+    }
+
+    return {
+      current: linkUrl.replace(/(?<=offset=)\d+/g, pageNumber),
+      next: linkUrl.replace(/(?<=offset=)\d+/g, pageNumber + 1),
+      previous: linkUrl.replace(/(?<=offset=)\d+/g, pageNumber - 1),
+    };
+  };
+
+  /**
+   * Create HAL links.
    * @param req
+   * @param total
    * @returns Object
   */
-  const createHalLinks = (req) => {
+  const getHalLinks = (req, total) => {
+    const numberOfPages = (Math.ceil(total / parseInt(req.options.limit, 10))) - 1;
+
+    const halLinks = createHalLinks(req);
+
     const links = {
       current: {
-        href: req.headers.host + req.originalUrl,
+        href: parseInt(req.options.pageNumber, 10) <= numberOfPages ? halLinks.current : '',
       },
       prev: {
-        href: req.headers.host + req.originalUrl,
+        href: parseInt(req.options.pageNumber, 10) > 0
+        && parseInt(req.options.pageNumber, 10) <= numberOfPages
+          ? halLinks.previous : '',
       },
       next: {
-        href: req.headers.host + req.originalUrl,
+        href: parseInt(req.options.pageNumber, 10) < numberOfPages ? halLinks.next : '',
       },
     };
     return links;
@@ -44,7 +74,7 @@ const StockViewModel = (function () {
         stocks,
         results: stocks.length,
         total,
-        links: createHalLinks(req),
+        links: getHalLinks(req, total),
       };
     },
   };
