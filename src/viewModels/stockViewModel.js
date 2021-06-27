@@ -1,4 +1,5 @@
 const camelcaseKeys = require('camelcase-keys');
+const url = require('url');
 
 const StockViewModel = (function () {
   // ************** Private Functions **************
@@ -16,20 +17,31 @@ const StockViewModel = (function () {
    * @returns
    */
   const createHalLinks = (req) => {
-    let pageNumber = 0;
-    let linkUrl = '';
+    const urlobj = url.parse(req.originalUrl);
+    urlobj.protocol = req.protocol;
+    urlobj.host = req.get('host');
+    const reqUrl = new URL(url.format(urlobj));
 
-    if (req.originalUrl.includes('&offset=')) {
+    let pageNumber = 0;
+
+    if (reqUrl.searchParams.has('offset')) {
       pageNumber = req.options.pageNumber;
-      linkUrl = req.headers.host + req.originalUrl;
     } else {
-      linkUrl = `${req.headers.host}${req.originalUrl}&offset=${req.options.pageNumber}`;
+      reqUrl.searchParams.append('offset', req.options.pageNumber);
     }
 
+    const current = reqUrl.toString();
+
+    reqUrl.searchParams.set('offset', pageNumber + 1);
+    const next = reqUrl.toString();
+
+    reqUrl.searchParams.set('offset', pageNumber - 1);
+    const previous = reqUrl.toString();
+
     return {
-      current: linkUrl.replace(/(?<=offset=)\d+/g, pageNumber),
-      next: linkUrl.replace(/(?<=offset=)\d+/g, pageNumber + 1),
-      previous: linkUrl.replace(/(?<=offset=)\d+/g, pageNumber - 1),
+      current,
+      next,
+      previous,
     };
   };
 
