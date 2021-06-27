@@ -25,9 +25,9 @@ const StockViewModel = (function () {
     let pageNumber = 0;
 
     if (reqUrl.searchParams.has('offset')) {
-      pageNumber = req.options.pageNumber;
+      pageNumber = req.options.offset;
     } else {
-      reqUrl.searchParams.append('offset', req.options.pageNumber);
+      reqUrl.searchParams.append('offset', req.options.offset);
     }
 
     const current = reqUrl.toString();
@@ -57,16 +57,16 @@ const StockViewModel = (function () {
     const halLinks = createHalLinks(req);
 
     const links = {
-      current: {
-        href: parseInt(req.options.pageNumber, 10) <= numberOfPages ? halLinks.current : '',
-      },
-      prev: {
-        href: parseInt(req.options.pageNumber, 10) > 0
-        && parseInt(req.options.pageNumber, 10) <= numberOfPages
+      previous: {
+        href: parseInt(req.options.offset, 10) > 0
+        && parseInt(req.options.offset, 10) <= numberOfPages
           ? halLinks.previous : '',
       },
+      current: {
+        href: parseInt(req.options.offset, 10) <= numberOfPages ? halLinks.current : '',
+      },
       next: {
-        href: parseInt(req.options.pageNumber, 10) < numberOfPages ? halLinks.next : '',
+        href: parseInt(req.options.offset, 10) < numberOfPages ? halLinks.next : '',
       },
     };
     return links;
@@ -84,9 +84,9 @@ const StockViewModel = (function () {
 
       return {
         stocks,
-        results: stocks.length,
-        total,
         links: getHalLinks(req, total),
+        count: stocks.length,
+        totalCount: total,
       };
     },
   };
