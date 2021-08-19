@@ -6,10 +6,10 @@ const morgan = require('morgan');
 
 const app = express();
 
-const headers = require('./src/routes/middleware/headers');
-const errorHandler = require('./src/routes/middleware/errorHandler');
-const validate = require('./src/routes/middleware/validate');
-const stocks = require('./src/routes/stocks');
+const headers = require('./src/middleware/headers');
+const errorHandler = require('./src/middleware/errorHandler');
+const validate = require('./src/middleware/validate');
+const v1StocksRouter = require('./src/v1/routes/stocks');
 
 app.use(helmet());
 app.use(hpp());
@@ -17,7 +17,7 @@ app.use(cors());
 app.use(morgan('combined'));
 
 // Routes
-app.use('/api/stocks', validate, stocks);
+app.use('/api/v1/stocks', validate, v1StocksRouter);
 
 // Set response headers.
 app.use(headers.setResponseHeaders);

@@ -12,10 +12,6 @@ router.use((req, res, next) => {
     return next(new Error(status[status.METHOD_NOT_ALLOWED]));
   }
 
-  if (req.get('Content-Type') !== 'application/json') {
-    req.customError = true;
-    return next(new Error('Incorrect http header \'Content-Type\', expected: \'application/json\''));
-  }
   return next();
 });
 

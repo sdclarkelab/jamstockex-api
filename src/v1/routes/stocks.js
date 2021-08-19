@@ -1,6 +1,6 @@
 const express = require('express');
 const stockController = require('../controllers/stockController');
-const stockMiddleware = require('./middleware/stocks');
+const stockMiddleware = require('../middleware/stocks');
 
 const router = express.Router();
 
