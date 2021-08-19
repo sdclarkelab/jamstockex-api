@@ -1,5 +1,5 @@
 const mongodbConfig = require('../configs/mongodbConfig');
-const StockService = require('../services/stockService');
+const StockService = require('../../services/stockService');
 const StockViewModel = require('../viewModels/stockViewModel');
 
 const stockModel = mongodbConfig.getStockModel();
