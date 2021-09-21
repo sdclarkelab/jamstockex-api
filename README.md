@@ -1,5 +1,5 @@
-# StockWatchJa: JamStockEx API V1
-The **StockWatchJa: JamStockEx API V1** serves up stock details info as JSON at this [URL](http://jamstockexapi.stockwatchja.com/stocks). The data is pulled from **[StockWatchJa: JamStockEx Scraper](https://github.com/sdclarkelab/jamstockex-scraper)**.
+# StockWatchJa: JamStockEx API v1
+The **StockWatchJa: JamStockEx API v1** serves up stock details info as JSON at this [URL](http://jamstockexapi.stockwatchja.com/stocks). The data is pulled from **[StockWatchJa: JamStockEx Scraper](https://github.com/sdclarkelab/jamstockex-scraper)**.
 
 #### Response Preview
 ```javascript
