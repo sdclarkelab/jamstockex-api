@@ -2,6 +2,7 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 
 const stockSchema = require('../schema/stockSchema');
+const constants = require('../../../utils/constants');
 
 const mongoDbConnection = (() => {
   let instance;
@@ -16,11 +17,11 @@ const mongoDbConnection = (() => {
       bufferMaxEntries: 0,
     };
 
-    const dbConnectionString = process.env.DB_V1;
+    const dbConnectionString = process.env.DB_V2;
 
     function createStockModel() {
       const connection = mongoose.createConnection(dbConnectionString, options);
-      return connection.model('stock', stockSchema);
+      return connection.model(constants.collectionName, stockSchema);
     }
 
     return {

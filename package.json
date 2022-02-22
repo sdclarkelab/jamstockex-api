@@ -2,11 +2,11 @@
   "name": "jamstockex-api",
   "version": "1.0.0",
   "description": "This project uses NodeJS, ExpressJS and Serverless framework to serve the scraped data from  [Jamaica Stock Exchange](https://www.jamstockex.com/)  website that is stored in a MongoDB Cloud instance.",
-  "main": "app.js",
+  "main": "api.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon app.js localhost 5000",
-    "start": "node app.js localhost 5000"
+    "api:dev": "nodemon api.js localhost 5000",
+    "api": "node api.js localhost 5000"
   },
   "repository": {
     "type": "git",
@@ -47,7 +47,7 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.0",
-    "nodemon": "^2.0.6",
+    "nodemon": "^2.0.15",
     "prettier": "^2.1.1"
   }
 }
