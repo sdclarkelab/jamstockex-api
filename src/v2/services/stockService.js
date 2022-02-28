@@ -27,13 +27,16 @@ class StockService {
       const stocks = await this.stockModel.find(serializedFilter)
         .select(mongodbSerializer.serializeArrayString(showFields))
         .limit(page.limit)
-        .skip(page.offset)
+        .skip(page.page)
         .lean({ virtuals: true })
         .exec();
 
-      stocks.count = await this.stockModel.countDocuments();
+      const count = await this.stockModel.countDocuments();
 
-      return stocks;
+      return {
+        stocks,
+        count,
+      };
     } catch (error) {
       console.log(error);
       return [];

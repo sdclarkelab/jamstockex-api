@@ -86,12 +86,4 @@ const stockSchema = new Schema(
   { collection: constants.collectionName },
 );
 
-// Create virtual property called "id" to store MongoDB id as a string
-stockSchema.virtual('id').get(function () {
-  return this._id.toString();
-});
-
-// The virtual properties will show up in a lean query
-stockSchema.plugin(mongooseLeanVirtuals);
-
 module.exports = stockSchema;

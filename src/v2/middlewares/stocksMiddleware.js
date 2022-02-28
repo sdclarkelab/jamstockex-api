@@ -4,7 +4,7 @@ const status = require('http-status');
 /**
  * Middleware that extracts query parameters and create an options object on the request object.
  */
-function parseQueryParams(req, res, next) {
+exports.parseQueryParams = (req, res, next) => {
   try {
     const queryParams = req.query;
 
@@ -23,9 +23,9 @@ function parseQueryParams(req, res, next) {
   } catch (error) {
     return next(new Error(status[status.BAD_REQUEST]));
   }
-}
+};
 
-function parsePaginationParams(req, res, next) {
+exports.parsePaginationParams = (req, res, next) => {
   try {
     const queryParams = req.query;
 
@@ -40,15 +40,15 @@ function parsePaginationParams(req, res, next) {
         }
         return reqLimit;
       })(),
-      offset: parseInt(_.get(queryParams, 'offset', 0), 10),
+      page: parseInt(_.get(queryParams, 'page', 0), 10),
     };
     return next();
   } catch (error) {
     return next(new Error(status[status.BAD_REQUEST]));
   }
-}
+};
 
-function parsePathParams(req, res, next) {
+exports.parsePathParams = (req, res, next) => {
   try {
     req.parsedPParms = {
       symbol: _.get(req.params, 'symbol', ''),
@@ -57,10 +57,4 @@ function parsePathParams(req, res, next) {
   } catch (error) {
     return next(new Error(status[status.BAD_REQUEST]));
   }
-}
-
-module.exports = {
-  parseQueryParams,
-  parsePaginationParams,
-  parsePathParams,
 };

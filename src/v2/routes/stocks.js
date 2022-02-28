@@ -9,6 +9,4 @@ router.use(stockMiddleware.parseQueryParams);
 router.get('/', stockMiddleware.parsePaginationParams, stockHandler.getStocks);
 router.get('/:symbol', stockHandler.getStockBySymbol);
 
-router.use(stockHandler.formatJSON);
-
 module.exports = router;
