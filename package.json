@@ -23,7 +23,7 @@
     "camelcase-keys": "^6.2.2",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "helmet": "^4.6.0",
     "hpp": "^0.2.3",
     "http-status": "^1.5.0",
